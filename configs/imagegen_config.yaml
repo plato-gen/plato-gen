@@ -1,0 +1,7 @@
+imagegen_inference_params:
+  base_model_path: stabilityai/stable-diffusion-2-1
+  controlnet_model_path: VargheseP/Mero_sd2_full_ellipse
+  test_dataset_name: VargheseP/palgo_ellipse_new_test
+  output_npfile_path: ./cache/cache_images/gen.npy #Path where the numpy file containing all generations is saved
+  output_image_folder: ./cache/cache_images/generations #Each generation is written here.
+
