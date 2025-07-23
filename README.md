@@ -22,7 +22,7 @@ Layouts </h2>
 1. [Overview](#plato-overview)
 2. [Getting Started](#-getting-started)
 3. [Demo](#-demo)
-4. [Image generation: Training and Inference](#image-generation:-training-and-inference)
+4. [Image generation: Training and Inference]()
 5. [Layout generation: Training and Inference]()
 6. [Citation](#-citation)
 7. [Contact](#-contact)
