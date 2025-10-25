@@ -1,0 +1,36 @@
+layoutgen_model_params:
+  batch_size: 128
+  latent_dims: 64
+  num_nodes: 16
+  bbx_size: 4
+  num_classes: 7
+  label_shape: 1
+  hidden1: 32
+  hidden2: 16
+  hidden3: 128
+  dense_hidden1: 8
+  dense_hidden2: 4
+layoutgen_train_params:
+  nb_epochs: 40000
+  save_epochs: 100 #Save weights after these number of epochs
+  learning_rate: 0.00015
+  adaptive_margin: True #True
+  fine_tune_box: false
+  output_log: false
+  area_encoding: false
+  run_prefix: two_stage_small_obj_conditioning_fft_gcn_reccurent_refine_training_noise_hw
+  variational: True 
+  coupling: false
+  obj_bbx_conditioning: True  
+  use_fft_on_bbx:  False    
+  use_gcn_in_decoder: True    
+  refine_iter: 2
+  data_path: /ssd_scratch/projects/palgo/e2e_data 
+  tmp_save_path: /ssd_scratch/varghese/tmp #Path to save tmp files
+  sample_from_latent: False #Sample from the latent space after every save_epochs number of epochs
+layoutgen_test_params:
+  plot_layouts: True
+  weights_path: /nas/varghese/palgo_training_runs/weights/run_zpos_cond_learnable_hierarchy_1/model_weights_10000.pth
+  output_folder_path: /ssd_scratch/varghese/palgo_training_runs/vizualize_latents/layouts
+  compute_metrics: True 
+  data_path: /archive/projects/palgo/e2e_data/
