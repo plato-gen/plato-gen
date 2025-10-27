@@ -25,12 +25,12 @@ layoutgen_train_params:
   use_fft_on_bbx:  True    
   use_gcn_in_decoder: True    
   refine_iter: 2
-  data_path: /ssd_scratch/projects/palgo/e2e_data 
+  data_path: /ssd_scratch/projects/palgo/e2e_data #Path to data 
   tmp_save_path: /ssd_scratch/varghese/tmp #Path to save tmp files
   sample_from_latent: False #Sample from the latent space after every save_epochs number of epochs
 layoutgen_test_params:
   plot_layouts: True  
   weights_path: ./playgen/runs/model/two_stage_small_obj_conditioning_fft_gcn_reccurent_refine_training_noise_hw/Obj-Box-0.00015-batch-128-h1-32-h2-16-h3-128-test/model_weights_0.pth
-  output_folder_path: /ssd_scratch/varghese/palgo_training_runs/vizualize_latents/layouts
+  output_folder_path: #Path to save the generated layouts 
   compute_metrics: True 
   data_path: /ssd_scratch/projects/palgo/e2e_data

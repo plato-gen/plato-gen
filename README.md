@@ -55,7 +55,7 @@ We provide three ready-to-use model checkpoints fine-tuned on the Pascal-Parts d
 
 | Model            | Download Link |
 |------------------|----------------------|
-| **PLayGen**     | [Download](https://Add_link_here) |
+| **PLayGen**     | [Download](https://drive.google.com/file/d/1I_30xgVhyKDuZlxZAJqBNXDPfbU4lDdZ/view?usp=sharing) |
 | **Image Generator** | [Download](https://huggingface.co/VargheseP/Mero_sd2_full_ellipse)|
 
 ---
