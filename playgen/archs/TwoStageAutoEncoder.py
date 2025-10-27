@@ -129,27 +129,6 @@ class TwoStageAutoEncoder(nn.Module):
                                    dense_hidden1,
                                    coupling
                                   )
-        
-        if self.use_hierarchical_cond:
-            self.pose_proj = nn.Sequential(
-            nn.Linear(10, self.proj_dim),   # change 10 to your pose dim if different
-            nn.ReLU(),
-            nn.Linear(self.proj_dim, self.proj_dim),)
-
-            self.latent_proj = nn.Sequential(
-                nn.Linear(self.latent_dims, self.proj_dim),
-                nn.ReLU(),
-                nn.Linear(self.proj_dim, self.proj_dim),)
-        
-    @property
-    def pose_scale(self):
-        # Map (-∞, ∞) → (0.1, 1.0)
-        return 0.1 + 0.9 * torch.sigmoid(self.pose_scale_raw)
-
-    @property
-    def latent_scale(self):
-        # Map (-∞, ∞) → (0.1, 1.0)
-        return 0.1 + 0.9 * torch.sigmoid(self.latent_scale_raw)
     
 
         

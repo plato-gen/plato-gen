@@ -127,7 +127,6 @@ def train():
         vae.train()
         i=0
         for train_iter, train_data in enumerate(batch_train_loader):
-            print(f"Inside train loop...")
             node_data_true = train_data.x
             label_true = node_data_true[:,:1]
             y_true = train_data.y
@@ -516,10 +515,6 @@ def test():
                             )
     
     # Load model from a W&B artifact
-    # Example to download weights from a specific run, if needed
-    # artifact = wandb.use_artifact(f'project_name/model:latest')
-    # artifact_path = artifact.download()
-    # vae.load_state_dict(torch.load(os.path.join(artifact_path, 'model_weights.pth')))
     vae.load_state_dict(torch.load(config.layoutgen_test_params.weights_path))
 
 
@@ -568,10 +563,7 @@ def test():
             final_preds = node_data_pred_test_new 
         
         if config.layoutgen_test_params.plot_layouts:
-            # Log layouts as images to a W&B artifact
             plot_utils.plot_pred_gt_layouts(config, node_data_true.cpu().detach().numpy(), final_preds.cpu().detach().numpy() , label_true.cpu().detach().numpy(), X_obj_pred_test.cpu().detach(), X_obj_true.cpu().detach(), y_true[:, :config.layoutgen_model_params.num_classes].cpu().detach().numpy())
-            # cv2.imwrite(f'test_layout_{i}.png', gt_img)
-            # test_layouts_artifact.add_file(f'test_layout_{i}.png')
             # REMOVED
             # plot_utils.plot_pred_gt_layouts(config, node_data_true.cpu().detach().numpy(), final_preds.cpu().detach().numpy() , label_true.cpu().detach().numpy(), X_obj_pred_test.cpu().detach(), X_obj_true.cpu().detach(), y_true[:, :config.layoutgen_model_params.num_classes].cpu().detach().numpy())
             # plot_utils.plot_layouts(config, final_preds.cpu().detach().numpy() , label_true.cpu().detach().numpy(), X_obj_pred_test.cpu().detach(), y_true[:, :config.layoutgen_model_params.num_classes].cpu().detach().numpy())

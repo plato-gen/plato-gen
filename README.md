@@ -84,15 +84,20 @@ $ accelerate launch train_imagegen.py --pretrained_model_name_or_path=$MODEL_DIR
 ```
 
 # Layout Generation: Training and Inference
-
-
-
-
+The config/layoutgen_config.yaml file contains the configuration for training and testing.
+- For Training
+```
+python playgen/train.py --train
+```
+- For Testing
+```
+python playgen/train.py --test
+```
 ---
 
 # 📜 Citation
 
-If you find this dataset or work useful, please consider citing:
+If you find this work useful, please consider citing:
 
 ```bibtex
 @article{yourcitation2025, 

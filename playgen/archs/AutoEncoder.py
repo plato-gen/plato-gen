@@ -2,8 +2,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from src.layout_generation.archs.Encoder import GCNEncoder, GATEncoder
-from src.layout_generation.archs.Decoder import Decoder
+from playgen.archs.Encoder import GCNEncoder, GATEncoder
+from playgen.archs.Decoder import Decoder
 
 if torch.cuda.is_available():
     device = torch.device('cuda')

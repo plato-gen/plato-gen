@@ -1,0 +1,18 @@
+e2e_pipeline:
+  image_output_path: /ssd_scratch/varghese/sampled_layouts/ #TODO: Delete this path if not required
+  layout_bbx_output_path: /ssd_scratch/varghese/sampled_layouts/crouch #TODO: Delete this path if not required
+  imagegen_weights: "VargheseP/Mero_sd2_full_ellipse" #Pull this model from huggingface
+  layout_gen_weights: /archive/projects/palgo/playgen_weights_cvpr.pth
+  object_class: cat
+  parts:
+  - head
+  - neck
+  - torso
+  - lfleg
+  - lfpa
+  - rfleg
+  - rfpa
+  - lbleg
+  - lbpa
+  - rbpa
+  - tail

@@ -40,9 +40,9 @@ class GCNEncoder(nn.Module):
         self.dense2 = nn.Linear(16*num_nodes+num_obj_classes,hidden3)
         self.dense3 = nn.Linear(hidden3,hidden3)
         
-        # self.latent = nn.Linear(hidden3,latent_dims)
-        self.fc_mean = nn.Linear(hidden3,latent_dims)
-        self.fc_logvar = nn.Linear(hidden3,latent_dims)
+        self.latent = nn.Linear(hidden3,latent_dims)
+        # self.fc_mean = nn.Linear(hidden3,latent_dims)
+        # self.fc_logvar = nn.Linear(hidden3,latent_dims)
 
     def forward(self, E, X_data,class_labels):
         
@@ -73,11 +73,8 @@ class GCNEncoder(nn.Module):
         x = self.act(self.dense3(x))
         x = self.act(self.dense3(x))
         
-        # z_mean = self.act(self.latent(x))
-        # z_logvar = self.act(self.latent(x))
-
-        z_mean = self.fc_mean(x)
-        z_logvar = self.fc_logvar(x)
+        z_mean = self.act(self.latent(x))
+        z_logvar = self.act(self.latent(x))
         
         return z_mean,z_logvar
 
