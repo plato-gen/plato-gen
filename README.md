@@ -55,7 +55,7 @@ We provide three ready-to-use model checkpoints fine-tuned on the Pascal-Parts d
 
 | Model            | Download Link |
 |------------------|----------------------|
-| **PLayGen**     | [Download](https://Add_link_here) |
+| **PLayGen**     | [Download](https://drive.google.com/file/d/1LN7eJKl8PEc4hDvUwqyfwBHiwvEHuRvc/view?usp=sharing) |
 | **Image Generator** | [Download](https://huggingface.co/VargheseP/Mero_sd2_full_ellipse)|
 
 ---
@@ -95,12 +95,22 @@ $ accelerate launch train_imagegen.py --pretrained_model_name_or_path=$MODEL_DIR
 If you find this dataset or work useful, please consider citing:
 
 ```bibtex
-@article{yourcitation2025, 
-  title={PLATO: Generating Objects from Part Lists via Synthesized Layouts}, 
-  author={Amruta Muthal, Varghese P Kuruvilla,  Ravi Kiran Sarvadevabhatla}, 
-  booktitle={ACMM}, 
-  year={2025}
-}
+      @inproceedings{10.1145/3746027.3755241,
+        author = {Muthal, Amruta and Kuruvilla, Varghese P and Sarvadevabhatla, Ravi Kiran},
+        title = {PLATO: Generating Objects from Part Lists via Synthesized Layouts},
+        year = {2025},
+        isbn = {9798400720352},
+        publisher = {Association for Computing Machinery},
+        address = {New York, NY, USA},
+        url = {https://doi.org/10.1145/3746027.3755241},
+        doi = {10.1145/3746027.3755241},
+        booktitle = {Proceedings of the 33rd ACM International Conference on Multimedia},
+        pages = {9940–9949},
+        numpages = {10},
+        keywords = {gcnvae, object generation, part layout generation},
+        location = {Dublin, Ireland},
+        series = {MM '25}
+        }
 ```
 
 ---
