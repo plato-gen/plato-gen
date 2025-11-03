@@ -2,6 +2,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch_geometric.nn as gnn
+import wandb 
+
+import pdb 
 
 class GCNDecoder(nn.Module):
     """ GCN Decoder module for BoxGCN-Vae. Takes the part presence and adjacency as decoder input.
@@ -32,7 +35,7 @@ class GCNDecoder(nn.Module):
         
         input_size = latent_dims + class_size
         if object_bbox:
-            input_size+=2
+            input_size+=4
         if hidden_obj_conditioning:
             input_size+=(hidden_obj_conditioning-class_size)
         if hidden_part_conditioning:
@@ -91,7 +94,8 @@ class Decoder(nn.Module):
                  object_bbox=False,
                  hidden_obj_conditioning=None,
                  hidden_part_conditioning=None,
-                 use_gcn=False
+                 use_gcn=False,
+                 use_pose_cond=False 
                  ):
         super(Decoder, self).__init__()
        
@@ -111,21 +115,25 @@ class Decoder(nn.Module):
             input_size+=(hidden_obj_conditioning-class_size)
         if hidden_part_conditioning:
             input_size+=(hidden_part_conditioning-num_nodes)
+        if use_pose_cond:
+            input_size += 10
             
         self.dense1 = nn.Linear(input_size,128)  
         self.dense2 = nn.Linear(128,128)
         self.dense_bbx = nn.Linear(128,num_nodes*bbx_size)
-        self.dense_bbx_refine = nn.Linear(128, num_nodes*bbx_size)
-        self.gconv_bbx = gnn.GCNConv(bbx_size, bbx_size, add_self_loops=True, bias=True)
+        if self.use_gcn:
+            self.dense_bbx_refine = nn.Linear(128, num_nodes*bbx_size)
+            self.gconv_bbx = gnn.GCNConv(bbx_size, bbx_size, add_self_loops=True, bias=True)
 
         self.dense_lbl = nn.Linear(128,num_nodes*label_size)
         self.dense_edge = nn.Linear(128,num_nodes*num_nodes)
         self.dense_cls = nn.Linear(128,class_size)
+
         self.act1 = nn.Sigmoid()
         self.act2 = nn.Softmax()
         self.act3 = nn.ReLU()
 
-    def forward(self, embedding, E=None, training=False, refine_iter=1, labels=None):
+    def forward(self, embedding, E=None, training=False, refine_iter=1):
         x = self.act1(self.dense1(embedding))
         x = self.act1(self.dense2(x))
         x = self.act1(self.dense2(x))
@@ -136,7 +144,8 @@ class Decoder(nn.Module):
         else:
             x_bbx = self.act1(self.dense_bbx(x))
         x_bbx = torch.reshape(x_bbx,[batch_size, self.num_nodes, self.bbx_size])
-        
+    
+
         x_lbl = self.act1(self.dense_lbl(x))
         x_lbl = torch.reshape(x_lbl,[batch_size, self.num_nodes, self.label_size])
         
@@ -152,16 +161,14 @@ class Decoder(nn.Module):
         if self.use_gcn:
             x_bbx_refined = x_bbx
             for _ in range(refine_iter):
-                x_masked = x_bbx_refined * (
-                    torch.reshape(labels, x_lbl.shape) 
-                    if (labels is not None) else x_lbl)
+                x_masked = x_bbx_refined * x_lbl
                 if training:
-                    x_masked = x_masked * (1.07 - 0.14 * torch.rand(x_masked.shape))
+                    x_masked = x_masked * (1.07 - 0.14 * torch.rand(x_masked.shape)) #Why these constants?
                 x_bbx_reshaped = torch.reshape(x_masked, (batch_size*self.num_nodes, self.bbx_size))
-                x_correction = self.act1(self.gconv_bbx(x_bbx_reshaped, E))
+                x_correction = self.act1(self.gconv_bbx(x_bbx_reshaped, E)) #E is used indirectly during the correction phase
                 x_bbx_refined = torch.reshape(x_bbx_reshaped + x_correction, x_bbx.shape)
             
             
             return x_bbx, x_lbl, x_edge, class_pred, x_bbx_refined
  
-        return x_bbx, x_lbl, x_edge, class_pred
+        return x_bbx, x_lbl, x_edge, class_pred, None

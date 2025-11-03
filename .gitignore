@@ -206,5 +206,12 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+<<<<<<< HEAD
 gradio_tmp/
 playgen/runs/
+=======
+
+gradio_tmp/
+playgen/runs/
+
+>>>>>>> 2d99abcb25ae3a810caff1942d9665379ad4842c

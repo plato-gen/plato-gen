@@ -2,16 +2,12 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from torch_geometric.nn import MessagePassing
-from torch_geometric.utils import to_dense_adj
-from torch_geometric.data import Data
-
-from components.Encoder import GCNEncoder, GATEncoder
-from components.Decoder import Decoder
+from playgen.archs.Encoder import GCNEncoder, GATEncoder
+from playgen.archs.Decoder import Decoder
 
 if torch.cuda.is_available():
     device = torch.device('cuda')
-    torch.set_default_tensor_type('torch.cuda.FloatTensor')
+    # torch.set_default_tensor_type('torch.cuda.FloatTensor')
         
 
 class GCNAutoEncoder(nn.Module):

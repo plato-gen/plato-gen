@@ -6,12 +6,15 @@ from torch_geometric.nn import MessagePassing
 from torch_geometric.utils import to_dense_adj
 from torch_geometric.data import Data
 
-from components.Encoder import GCNEncoder, GATEncoder
-from components.Decoder import Decoder
+import sys
+sys.path.append(f"/home/varghese/palgo/")
+
+from src.layout_generation.archs.Encoder import GCNEncoder, GATEncoder
+from src.layout_generation.archs.Decoder import Decoder
 
 if torch.cuda.is_available():
     device = torch.device('cuda')
-    torch.set_default_tensor_type('torch.cuda.FloatTensor')
+    #torch.set_default_tensor_type('torch.cuda.FloatTensor')
         
 
 class DenseAutoencoder(nn.Module):
@@ -101,12 +104,12 @@ class Decoder(nn.Module):
 
         
         
-    def forward(self, latent_X ):
+    def forward(self, latent_X):
         
         X = self.d1(latent_X)
         X = self.d2(X)
         x_bbx = self.dense_bbx(X)
-        X_bbx = self.act1(x_bbx)
+        x_bbx = self.act1(x_bbx)
         
         return x_bbx
 
